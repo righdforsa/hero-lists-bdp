@@ -1,0 +1,13 @@
+{
+  "name": "Hero Lists BDP",
+  "description": "A custom Business Directory Plugin theme with support for listing pages with hero sections to improve conversion and SEO.",
+  "version": "1.1.22",
+  "author": "Christopher Peters",
+  "author_uri": "https://github.com/righdforsa/",
+  "theme_uri": "https://github.com/righdforsa/hero-lists-bdp",
+  "license": "GPLv2 or later",
+  "license_uri": "https://www.gnu.org/licenses/gpl-2.0.html",
+  "assets": {
+    "css": ["style.css"]
+  }
+}

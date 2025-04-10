@@ -1,0 +1,74 @@
+/*
+Theme Name: Hero Lists BDP
+Theme URI: https://github.com/righdforsa/hero-lists-bdp
+Author: Christopher Peters
+Description: Custom BDP theme for displaying hero image and description on directory tag pages.
+*/
+
+.bdp-hero-section {
+  margin-bottom: 2rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.bdp-hero-content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: center;
+}
+
+.bdp-hero-text {
+  flex: 0 0 calc(60% - 1rem); /* half the hero-content gap */
+  max-width: calc(60% - 1rem);
+  box-sizing: border-box;
+}
+
+.bdp-hero-text h2 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.bdp-hero-text p {
+  max-width: 40ch;
+  font-size: 1.3rem;
+  line-height: 1.8;
+}
+
+.bdp-hero-image {
+  flex: 0 0 calc(40% - 1rem); /* half the hero-content gap */
+  max-width: calc(40% - 1rem);
+  box-sizing: border-box;
+}
+
+.bdp-hero-image img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .bdp-hero-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .bdp-hero-image {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  
+  .bdp-hero-text {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .bdp-hero-image img {
+    max-width: 100%;
+    height: auto;
+  }
+}
