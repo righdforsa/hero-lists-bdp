@@ -18,7 +18,6 @@ $term = get_queried_object();
 
 if ( $term && ! is_wp_error( $term ) && isset( $term->taxonomy ) ) :
     $term_name = $term->name;
-    $term_description = term_description( $term );
 
     if(!function_exists('get_fields') || !function_exists('get_field')) :
         echo "\n<!-- Failed to find ACF (advanced custom fields) function. Check plugin status. -->\n";
@@ -29,15 +28,15 @@ if ( $term && ! is_wp_error( $term ) && isset( $term->taxonomy ) ) :
             echo "\n<!-- DEBUG: get_fields for " . esc_html($term_key) . " found fields: " . json_encode(array_keys($fields)) . " -->\n";
         endif;
 
-        $image_field_name = 'directory_tag_featured_image';
-        $featured_image = function_exists( 'get_field' ) ? get_field( $image_field_name, $term_key ) : false;
-        if ( !$featured_image ) :
-            echo "\n<!-- DEBUG: failed to find featured_image for term_key " . esc_html( $term_key ) . "-->\n";
+        $image_field_name = 'bdp_taxonomy_hero_image';
+        $hero_image = function_exists( 'get_field' ) ? get_field( $image_field_name, $term_key ) : false;
+        if ( !$hero_image ) :
+            echo "\n<!-- DEBUG: failed to find hero_image for term_key " . esc_html( $term_key ) . "-->\n";
         else:
-            echo "\n<!-- DEBUG: found featured_image " . json_encode( $featured_image['id'] ) . "-->\n";
+            echo "\n<!-- DEBUG: found hero_image " . json_encode( $hero_image['id'] ) . "-->\n";
         endif;
 
-        $hero_headline_field_name = 'directory_tag_hero_headline';
+        $hero_headline_field_name = 'bdp_taxonomy_hero_headline';
         $hero_headline = function_exists( 'get_field' ) ? get_field( $hero_headline_field_name, $term_key ) : false;
         if ( !$hero_headline ) :
             echo "\n<!-- DEBUG: failed to find hero_headline for term_key " . esc_html( $term_key ) . "-->\n";
@@ -45,29 +44,37 @@ if ( $term && ! is_wp_error( $term ) && isset( $term->taxonomy ) ) :
             echo "\n<!-- DEBUG: found hero_headline " . json_encode( $hero_headline ) . "-->\n";
         endif;
 
+        $hero_description_field_name = 'bdp_taxonomy_hero_description';
+        $hero_description = function_exists( 'get_field' ) ? get_field( $hero_description_field_name, $term_key ) : false;
+        if ( !$hero_description ) :
+            echo "\n<!-- DEBUG: failed to find hero_description for term_key " . esc_html( $term_key ) . "-->\n";
+        else:
+            echo "\n<!-- DEBUG: found hero_description " . json_encode( $hero_description ) . "-->\n";
+        endif;
+
     endif;
 
-    if ( $hero_headline || $term_description || $featured_image ) :
+    if ( $hero_headline || $hero_description || $hero_image ) :
     ?>
         <section class="bdp-hero-section">
             <div class="bdp-hero-content">
-                <?php if ( $hero_headline || $term_description ) : ?>
+                <?php if ( $hero_headline || $hero_description ) : ?>
                     <div class="bdp-hero-text">
                         <?php if ($hero_headline) : echo wp_kses_post( '<h2>' . $hero_headline . '</h2>' ); endif; ?>
-                        <?php if ($term_description) : echo wp_kses_post( wpautop( $term_description ) ); endif; ?>
+                        <?php if ($hero_description) : echo wp_kses_post( wpautop( $hero_description ) ); endif; ?>
                     </div>
                 <?php endif; ?>
 
-                <?php if ( $featured_image && is_array( $featured_image ) && isset( $featured_image['url'] ) ) : ?>
+                <?php if ( $hero_image && is_array( $hero_image ) && isset( $hero_image['url'] ) ) : ?>
                     <div class="bdp-hero-image">
-                        <img src="<?php echo esc_url( $featured_image['url'] ); ?>" alt="<?php echo esc_attr( $term_name ); ?>" />
+                        <img src="<?php echo esc_url( $hero_image['url'] ); ?>" alt="<?php echo esc_attr( $term_name ); ?>" />
                     </div>
                 <?php endif; ?>
             </div>
         </section>
     <?php
     else:
-        echo "\n<!-- DEBUG: hero-lists-bdp template: " . basename(__FILE__) . " failed to find term_description or featured_image -->\n";
+        echo "\n<!-- DEBUG: hero-lists-bdp template: " . basename(__FILE__) . " failed to find hero_description or hero_image -->\n";
     endif;
 else:
     echo "\n<!-- DEBUG: hero-lists-bdp template: " . basename(__FILE__) . " failed to find term or term was an error -->\n";
